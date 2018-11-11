@@ -10,6 +10,64 @@ var config = {
 
   var database = firebase.database();
 
+  //Shows user the current time
+//   $("#currentTime").append(moment().format("hh:mm A"));
+  
+  // Button for adding trains
+  $("#addTrain").on("click", function() {
+      event.preventDefault();
+      // Grabs user input
+      var trainName = $("#trainName").val().trim();
+      var destination = $("#destination").val().trim();
+      var firstTrain = moment($("#firsttrainTime").val().trim(), "HH:mm").subtract(10, "years").format("X");
+      var frequency = $("#frequency").val().trim();
+  
+      // Creates local "temporary" object for holding train data
+      var newTrain = {
+          name: trainName,
+          destination: destination,
+          firstTrain: firstTrain,
+          frequency: frequency
+      }
+  
+      // Uploads train data to the database
+      trainData.push(newTrain);
+  
+      // Alert
+      alert(newTrain.name + " has been successfully added");
+  
+      // Clears all of the text-boxes
+      $("#trainName").val("");
+      $("#destination").val("");
+      $("#firstTrain").val("");
+      $("#frequency").val("");
+  
+      
+  });
+  
+  
+  // Create Firebase event for adding trains to the database and a row in the html when a user adds an entry
+  database.on("child_added", function(snapshot) {
+  
+      var trainData = snapshot.val();
+      var trainName = trainData.name;
+      var trainDestination = trainData.destination;
+      var trainFrequency = trainData.frequency;
+      var firstTrain = data.firstTrain;
+      console.log(firstTrain);
+      // Calculate the minutes until arrival using hardcore math
+      // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time and find the modulus between the difference and the frequency  
+      var tRemainder = moment().diff(moment.unix(firstTrain), "minutes") % trainFrequency;
+      var tMinutes = trainFrequency - tRemainder;
+  
+      // To calculate the arrival time, add the tMinutes to the currrent time
+      var tArrival = moment().add(tMinutes, "m").format("hh:mm A");
+  
+      // Add each train's data into the table 
+      $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td class='min'>" + trainFrequency + "</td><td class='min'>" + tArrival + "</td><td class='min'>" + tMinutes + "</td></tr>");
+  
+  });
+
 // Assume the following situations.
 
     // (TEST 1)
@@ -84,17 +142,6 @@ var config = {
 //    Then use moment.js formatting to set difference in months.
 // 5. Calculate Total billed
 
-// 1. Initialize Firebase
-var config = {
-    apiKey: "AIzaSyA_QypGPkcjPtylRDscf7-HQl8ribnFeIs",
-    authDomain: "time-sheet-55009.firebaseapp.com",
-    databaseURL: "https://time-sheet-55009.firebaseio.com",
-    storageBucket: "time-sheet-55009.appspot.com"
-  };
-  
-  firebase.initializeApp(config);
-  
-  var database = firebase.database();
   
   // 2. Button for adding Employees
   $("#add-employee-btn").on("click", function(event) {
