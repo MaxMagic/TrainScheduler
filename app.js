@@ -1,3 +1,15 @@
+var config = {
+    apiKey: "AIzaSyAk3gzpz14mbGdW2Kf3D579T7HOUVBa3oc",
+    authDomain: "trainscheduler-ba26c.firebaseapp.com",
+    databaseURL: "https://trainscheduler-ba26c.firebaseio.com",
+    projectId: "trainscheduler-ba26c",
+    storageBucket: "trainscheduler-ba26c.appspot.com",
+    messagingSenderId: "837568288906"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
 // Assume the following situations.
 
     // (TEST 1)
