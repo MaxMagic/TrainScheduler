@@ -31,7 +31,7 @@ var config = {
   
       $("#trainName").val("");
       $("#destination").val("");
-      $("#firstTrain").val("");
+      $("#firstTrainTime").val("");
       $("#frequency").val("");    
   });
   
@@ -74,7 +74,7 @@ var config = {
       $("<td>").text(nextTrain),
       $("<td>").text(tMinutesTillTrain)
     );
-    
+
     $("#train-table > tbody").append(newRow);
   
   });
