@@ -39,10 +39,10 @@ var config = {
   
     console.log(snapshot.val());
 
-    var trainName = childSnapshot.val().name;
-    var destination = childSnapshot.val().destination;
-    var firstTrain = childSnapshot.val().firstTrain;
-    var frequency = childSnapshot.val().rate;
+    var trainName = snapshot.val().name;
+    var destination = snapshot.val().destination;
+    var firstTrain = snapshot.val().firstTrain;
+    var frequency = snapshot.val().frequency;
   
     console.log(trainName);
     console.log(destination);
