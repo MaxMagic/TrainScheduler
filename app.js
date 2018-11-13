@@ -31,41 +31,29 @@ var config = {
   
       $("#trainName").val("");
       $("#destination").val("");
-      $("#firstTrainTime").val("");
+      $("#firsttrainTime").val("");
       $("#frequency").val("");    
   });
   
   database.ref().on("child_added", function(snapshot) {
-  
-    console.log(snapshot.val());
 
     var trainName = snapshot.val().name;
     var destination = snapshot.val().destination;
     var firstTrain = snapshot.val().firstTrain;
     var frequency = snapshot.val().frequency;
-  
-    console.log(trainName);
-    console.log(destination);
-    console.log(firstTrain);
-    console.log(frequency);
 
     var firstTimeConverted = moment(firstTrain, "HHmm").subtract(1, "years");
-    console.log(firstTimeConverted);
 
     var currentTime = moment();
     console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
 
     var tRemainder = diffTime % frequency;
-    console.log(tRemainder);
 
     var tMinutesTillTrain = frequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("HHmm"));
 
     var newRow = $("<tr>").append(
       $("<td>").text(trainName),
